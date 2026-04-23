@@ -1,0 +1,47 @@
+services:
+
+  # ─── PHP 8.1 + Apache ───────────────────────────────────────────
+  web:
+    build: .
+    container_name: bitrix_web
+    ports:
+      - "8081:8081"     # сайт: http://localhost:8081 (порт одинаковый внутри и снаружи — нужно для Bitrix site_checker)
+    volumes:
+      - ./www:/var/www/html          # исходники Bitrix
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APACHE_RUN_USER:  www-data
+      APACHE_RUN_GROUP: www-data
+    restart: unless-stopped
+
+  # ─── MySQL 8.0 ──────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: bitrix_db
+    ports:
+      - "3307:3306"     # подключение извне: localhost:3307
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE:      bitrix
+      MYSQL_USER:          bitrix
+      MYSQL_PASSWORD:      bitrix123
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/bitrix.cnf:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # ─── Memcached (Bitrix активно использует) ──────────────────────
+  memcached:
+    image: memcached:alpine
+    container_name: bitrix_memcached
+    restart: unless-stopped
+
+volumes:
+  db_data:

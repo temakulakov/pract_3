@@ -1,0 +1,55 @@
+# ===== Ядро Bitrix — НЕ коммитим =====
+# Устанавливается через restore.php/BitrixSetup, 1.2 ГБ, постоянно обновляется
+/www/bitrix/*
+
+# Но наш кастомный admin-файл оставляем
+!/www/bitrix/admin/
+/www/bitrix/admin/*
+!/www/bitrix/admin/kulakov_settings.php
+
+# ===== Пользовательские загрузки =====
+/www/upload/
+
+# ===== Кэш и временные файлы =====
+/www/bitrix/cache/
+/www/bitrix/managed_cache/
+/www/bitrix/stack_cache/
+/www/bitrix/html_pages/
+/www/bitrix/tmp/
+/www/bitrix/backup/
+/www/bitrix/updates/
+
+# ===== Секреты и локальные настройки =====
+/www/bitrix/.settings.php
+/www/bitrix/.settings_extra.php
+/www/bitrix/php_interface/dbconn.php
+/www/bitrix/php_interface/after_connect.php
+/www/bitrix/php_interface/after_connect_d7.php
+
+# ===== Логи =====
+*.log
+/www/bitrix/logs/
+
+# ===== MySQL данные (volume) =====
+/mysql/data/
+/db_data/
+
+# ===== IDE / OS =====
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ===== Dev =====
+.env
+.env.local
+node_modules/
+*.tar.gz
+*.zip
+*.sql
+*.sql.gz
+
+# ===== Docker volumes (если монтируешь локально) =====
+/docker/volumes/
