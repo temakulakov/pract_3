@@ -42,6 +42,9 @@ $avatarInitials = mb_strtoupper($avatarInitials ?: 'АК');
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?php $APPLICATION->ShowTitle(false); ?> — <?= htmlspecialcharsbx($siteName) ?></title>
+  <link rel="icon" href="/local/templates/kulakov_theme/images/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/local/templates/kulakov_theme/images/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/local/templates/kulakov_theme/images/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
