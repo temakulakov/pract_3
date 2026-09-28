@@ -56,7 +56,6 @@
 </div>
 
 <script>
-// Ванильный JS — не зависит от момента загрузки jQuery
 document.addEventListener('DOMContentLoaded', function () {
   var chips = document.querySelectorAll('.filter-row .chip');
   var cards = document.querySelectorAll('#skillCards .skill-card');

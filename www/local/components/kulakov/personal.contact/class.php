@@ -19,14 +19,12 @@ class KulakovPersonalContact extends CBitrixComponent
             return;
         }
 
-        // Сбор и санитизация данных
         $name    = trim((string)($_POST['name']    ?? ''));
         $email   = trim((string)($_POST['email']   ?? ''));
         $message = trim((string)($_POST['message'] ?? ''));
 
         $this->arResult['FORM'] = compact('name', 'email', 'message');
 
-        // Валидация
         if ($name === '')
             $this->arResult['ERRORS'][] = 'Введите имя';
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
@@ -39,7 +37,6 @@ class KulakovPersonalContact extends CBitrixComponent
             return;
         }
 
-        // 1. Сохранение в инфоблок-лог (если настроено)
         $logIblockId = (int)($this->arParams['LOG_IBLOCK_ID'] ?? 0);
         if ($logIblockId > 0 && CModule::IncludeModule('iblock')) {
             $el = new CIBlockElement();
@@ -55,7 +52,6 @@ class KulakovPersonalContact extends CBitrixComponent
             ]);
         }
 
-        // 2. Отправка письма через стандартный механизм Bitrix CEvent
         $eventType = (string)($this->arParams['EVENT_TYPE'] ?? '');
         if ($eventType !== '') {
             $fields = [

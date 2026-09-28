@@ -39,8 +39,6 @@ class KulakovPersonalProjects extends CBitrixComponent
         $iblockId = (int)($this->arParams['IBLOCK_ID'] ?? 0);
 
         if ($iblockId > 0 && CModule::IncludeModule('iblock')) {
-            // PROPERTY_STATUS не включаем в arSelect — возможно множественное,
-            // берём через GetProperties() чтобы избежать дублирования строк
             $res = CIBlockElement::GetList(
                 ['SORT' => 'ASC'],
                 ['IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y'],

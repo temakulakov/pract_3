@@ -8,7 +8,6 @@ while ($arIB = $rsIBlocks->Fetch()) {
     $arIBlocks[$arIB['ID']] = '[' . $arIB['ID'] . '] ' . $arIB['NAME'];
 }
 
-// Список почтовых событий (типов)
 $arEventTypes = ['' => '(не отправлять письмо)'];
 $rsET = CEventType::GetList(['LID' => LANGUAGE_ID]);
 while ($et = $rsET->Fetch()) {

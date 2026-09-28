@@ -2,14 +2,12 @@
 
 if (!CModule::IncludeModule('iblock')) return;
 
-// Список инфоблоков
 $arIBlocks = [];
 $rsIBlocks = CIBlock::GetList(['SORT' => 'ASC'], ['ACTIVE' => 'Y']);
 while ($arIB = $rsIBlocks->Fetch()) {
     $arIBlocks[$arIB['ID']] = '[' . $arIB['ID'] . '] ' . $arIB['NAME'];
 }
 
-// Элементы выбранного инфоблока (каскадный дропдаун)
 $arElements = [];
 $iblockId = (int)($arCurrentValues['IBLOCK_ID'] ?? 0);
 if ($iblockId > 0) {

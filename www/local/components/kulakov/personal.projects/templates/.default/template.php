@@ -10,7 +10,6 @@
 
 <div class="notion-divider"></div>
 
-<!-- Фильтр -->
 <div class="filter-row" id="projectsFilterRow">
   <button class="chip active" data-filter="all">Все</button>
   <button class="chip" data-filter="В работе">В работе</button>
@@ -18,7 +17,6 @@
   <button class="chip" data-filter="Готово">Готово</button>
 </div>
 
-<!-- Таблица проектов -->
 <table id="projectsTable">
   <thead>
     <tr>
@@ -49,7 +47,6 @@
 
 <p class="table-hint">Нажмите на строку, чтобы узнать подробнее</p>
 
-<!-- Модальное окно (без jQuery UI — ванильный JS) -->
 <div id="projectModal" class="modal-overlay" style="display:none;">
   <div class="modal-box">
     <button class="modal-close" id="projectModalClose">&#10005;</button>
@@ -61,7 +58,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ── Фильтр ── */
   var chips  = document.querySelectorAll('#projectsFilterRow .chip');
   var rows   = document.querySelectorAll('#projectsTbody .table-row');
 
@@ -78,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  /* ── Модалка при клике на строку ── */
   var modal     = document.getElementById('projectModal');
   var modalTitle = document.getElementById('modalTitle');
   var modalDesc  = document.getElementById('modalDesc');

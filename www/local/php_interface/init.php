@@ -1,5 +1,4 @@
 <?php
-// Добавляем пункт «Настройки сайта Kulakov» в раздел «Настройки» админ-панели
 AddEventHandler('main', 'OnBuildGlobalMenu', 'KulakovAddAdminMenu');
 function KulakovAddAdminMenu(&$aGlobalMenu, &$aModuleMenu)
 {

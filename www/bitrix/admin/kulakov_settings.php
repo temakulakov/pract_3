@@ -3,7 +3,6 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_b
 
 $APPLICATION->SetTitle("Настройки сайта (Kulakov)");
 
-// Проверка прав — только админ
 if (!$USER->IsAdmin()) {
     $APPLICATION->AuthForm("Доступ запрещён");
 }
@@ -11,7 +10,6 @@ if (!$USER->IsAdmin()) {
 $MODULE = 'kulakov.main';
 $errors = [];
 
-// Сохранение
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && check_bitrix_sessid()) {
     $title    = trim((string)($_POST['HEADER_TITLE']    ?? ''));
     $subtitle = trim((string)($_POST['HEADER_SUBTITLE'] ?? ''));
@@ -24,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && check_bitrix_sessid()) {
     LocalRedirect($APPLICATION->GetCurPageParam('saved=Y', ['saved']));
 }
 
-// Текущие значения
 $HEADER_TITLE    = COption::GetOptionString($MODULE, 'HEADER_TITLE',    'Артем Кулаков');
 $HEADER_SUBTITLE = COption::GetOptionString($MODULE, 'HEADER_SUBTITLE', 'Пи2у/23Б');
 $SITE_NAME       = COption::GetOptionString($MODULE, 'SITE_NAME',      'Артем Кулаков');

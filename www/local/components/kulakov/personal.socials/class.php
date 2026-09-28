@@ -24,9 +24,6 @@ class KulakovPersonalSocials extends CBitrixComponent
                 $fields = $item->GetFields();
                 $props  = $item->GetProperties();
 
-                // Иконка:
-                // 1) Приоритет — свойство ICON (тип «Файл»), принимает SVG
-                // 2) Фоллбэк — стандартная PREVIEW_PICTURE (только PNG/JPG/GIF)
                 $iconPath = '';
                 $iconFileId = $props['ICON']['VALUE'] ?? null;
                 if (!empty($iconFileId)) {

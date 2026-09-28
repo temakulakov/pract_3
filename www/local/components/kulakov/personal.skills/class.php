@@ -30,9 +30,6 @@ class KulakovPersonalSkills extends CBitrixComponent
         $iblockId = (int)($this->arParams['IBLOCK_ID'] ?? 0);
 
         if ($iblockId > 0 && CModule::IncludeModule('iblock')) {
-            // ВАЖНО: PROPERTY_TAGS убран из arSelect — множественное свойство
-            // в JOIN-запросе даёт по одной строке на каждый тег (дублирование).
-            // Теги получаем отдельно через GetProperties().
             $res = CIBlockElement::GetList(
                 ['SORT' => 'ASC'],
                 ['IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y'],

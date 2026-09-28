@@ -1,13 +1,9 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-// --- Значения из настроек сайта (модуль kulakov.main) ---
 $headerTitle    = COption::GetOptionString('kulakov.main', 'HEADER_TITLE',    'Артем Кулаков');
 $headerSubtitle = COption::GetOptionString('kulakov.main', 'HEADER_SUBTITLE', 'Пи2у/23Б');
 $siteName       = COption::GetOptionString('kulakov.main', 'SITE_NAME',      'Артем Кулаков');
 
-// --- Синхронизация заголовка страницы с пунктом меню ---
-// Читаем файл .left.menu.php в корне сайта и ищем текущий URL.
-// Если нашли — принудительно устанавливаем <title> и h1 равным названию пункта меню.
 $menuFile = $_SERVER['DOCUMENT_ROOT'] . '/.left.menu.php';
 if (file_exists($menuFile)) {
     $aMenuLinks = [];
@@ -27,7 +23,6 @@ if (file_exists($menuFile)) {
     }
 }
 
-// Аватар-инициалы — из первых букв заголовка
 $avatarInitials = '';
 $parts = preg_split('/\s+/', trim($headerTitle));
 foreach ($parts as $p) {
@@ -71,7 +66,6 @@ $avatarInitials = mb_strtoupper($avatarInitials ?: 'АК');
 
     <nav>
       <?php
-      // Меню из .left.menu.php — редактируется в режиме правки
       $APPLICATION->IncludeComponent(
           "bitrix:menu",
           "kulakov_left",

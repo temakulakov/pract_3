@@ -2,14 +2,12 @@
 
 if (!CModule::IncludeModule('iblock')) return;
 
-// Список инфоблоков для выпадающего списка
 $arIBlocks = [];
 $rsIBlocks = CIBlock::GetList(['SORT' => 'ASC'], ['ACTIVE' => 'Y']);
 while ($arIB = $rsIBlocks->Fetch()) {
     $arIBlocks[$arIB['ID']] = '[' . $arIB['ID'] . '] ' . $arIB['NAME'];
 }
 
-// Список элементов выбранного инфоблока (обновляется при смене IBLOCK_ID)
 $arElements = [];
 $iblockId = (int)($arCurrentValues['IBLOCK_ID'] ?? 0);
 if ($iblockId > 0) {
@@ -36,7 +34,7 @@ $arComponentParameters = [
             'TYPE'    => 'LIST',
             'VALUES'  => $arIBlocks,
             'DEFAULT' => '',
-            'REFRESH' => 'Y',  // перезагружает форму параметров при смене
+            'REFRESH' => 'Y',
         ],
         'ELEMENT_ID' => [
             'PARENT'  => 'SOURCE',

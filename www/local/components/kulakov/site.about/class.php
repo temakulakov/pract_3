@@ -2,7 +2,6 @@
 
 class KulakovSiteAbout extends CBitrixComponent
 {
-    // Данные по умолчанию — если инфоблок не выбран или пуст
     private array $defaults = [
         'TITLE'    => 'О сайте',
         'SUBTITLE' => 'Практическая работа №3 — интеграция в 1С-Битрикс',
@@ -34,7 +33,6 @@ class KulakovSiteAbout extends CBitrixComponent
                 $filter['ID'] = $elementId;
             }
 
-            // Множественные свойства (TECH) не в arSelect — читаем через GetProperties
             $el = CIBlockElement::GetList(
                 ['SORT' => 'ASC'],
                 $filter,
@@ -49,15 +47,12 @@ class KulakovSiteAbout extends CBitrixComponent
 
                 $this->arResult['ELEMENT_ID'] = (int)$fields['ID'];
 
-                // Заголовок — из поля «Название»
                 if (!empty($fields['NAME']))
                     $this->arResult['TITLE'] = $fields['NAME'];
 
-                // Подзаголовок — из свойства SUBTITLE
                 if (!empty($props['SUBTITLE']['VALUE']))
                     $this->arResult['SUBTITLE'] = $props['SUBTITLE']['VALUE'];
 
-                // Цель работы — из детального описания
                 if (!empty($fields['DETAIL_TEXT'])) {
                     if (($fields['DETAIL_TEXT_TYPE'] ?? 'text') === 'html') {
                         $this->arResult['GOAL'] = $fields['DETAIL_TEXT'];
@@ -73,7 +68,6 @@ class KulakovSiteAbout extends CBitrixComponent
                     }
                 }
 
-                // Список технологий — множественное свойство TECH
                 if (!empty($props['TECH']['VALUE'])) {
                     $val = $props['TECH']['VALUE'];
                     $tech = is_array($val) ? $val : [$val];
@@ -82,7 +76,6 @@ class KulakovSiteAbout extends CBitrixComponent
                     );
                 }
 
-                // Автор — свойство AUTHOR
                 if (!empty($props['AUTHOR']['VALUE']))
                     $this->arResult['AUTHOR'] = $props['AUTHOR']['VALUE'];
             }

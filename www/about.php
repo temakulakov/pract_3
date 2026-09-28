@@ -36,7 +36,6 @@
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script>
-    // Canvas-фон (минимальная версия для второй страницы)
     (function () {
       var c = document.getElementById('bgCanvas'), ctx = c.getContext('2d');
       function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }

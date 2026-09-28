@@ -2,7 +2,6 @@
 
 class KulakovPersonalAbout extends CBitrixComponent
 {
-    // Данные по умолчанию — если инфоблок не выбран или пуст
     private array $defaults = [
         'TITLE'     => 'Кулаков Артем',
         'SUBTITLE'  => 'Студент направления «Программная инженерия»',
@@ -24,7 +23,6 @@ class KulakovPersonalAbout extends CBitrixComponent
         $this->arResult['IBLOCK_ID']   = 0;
         $this->arResult['IBLOCK_TYPE'] = '';
 
-        // Берём IBLOCK_ID и ELEMENT_ID из параметров компонента (настраивается в режиме правки)
         $iblockId  = (int)($this->arParams['IBLOCK_ID']  ?? 0);
         $elementId = (int)($this->arParams['ELEMENT_ID'] ?? 0);
 
@@ -32,18 +30,14 @@ class KulakovPersonalAbout extends CBitrixComponent
 
             $this->arResult['IBLOCK_ID'] = $iblockId;
 
-            // Тип инфоблока — для URL кнопки редактирования
             $arIblock = CIBlock::GetArrayByID($iblockId);
             $this->arResult['IBLOCK_TYPE'] = $arIblock['IBLOCK_TYPE_ID'] ?? '';
 
-            // Фильтр: конкретный элемент или первый активный
             $filter = ['IBLOCK_ID' => $iblockId, 'ACTIVE' => 'Y'];
             if ($elementId > 0) {
                 $filter['ID'] = $elementId;
             }
 
-            // ВАЖНО: не включаем множественные свойства (INTERESTS) в arSelect —
-            // это приведёт к дублированию строк через JOIN. Читаем их через GetProperties().
             $el = CIBlockElement::GetList(
                 ['SORT' => 'ASC'],
                 $filter,
@@ -58,15 +52,12 @@ class KulakovPersonalAbout extends CBitrixComponent
 
                 $this->arResult['ELEMENT_ID'] = (int)$fields['ID'];
 
-                // ФИО — из поля «Название»
                 if (!empty($fields['NAME']))
                     $this->arResult['TITLE'] = $fields['NAME'];
 
-                // Подзаголовок — из свойства SUBTITLE
                 if (!empty($props['SUBTITLE']['VALUE']))
                     $this->arResult['SUBTITLE'] = $props['SUBTITLE']['VALUE'];
 
-                // Основной текст — из детального описания
                 if (!empty($fields['DETAIL_TEXT'])) {
                     if (($fields['DETAIL_TEXT_TYPE'] ?? 'text') === 'html') {
                         $this->arResult['TEXT'] = $fields['DETAIL_TEXT'];
@@ -82,7 +73,6 @@ class KulakovPersonalAbout extends CBitrixComponent
                     }
                 }
 
-                // Интересы — множественное свойство INTERESTS
                 if (!empty($props['INTERESTS']['VALUE'])) {
                     $val = $props['INTERESTS']['VALUE'];
                     $interests = is_array($val) ? $val : [$val];
@@ -91,9 +81,6 @@ class KulakovPersonalAbout extends CBitrixComponent
                     );
                 }
 
-                // Аватарка:
-                // 1) Приоритет — свойство AVATAR (тип «Файл»), принимает SVG
-                // 2) Фоллбэк — стандартная DETAIL_PICTURE (только PNG/JPG/GIF)
                 $avatarFileId = $props['AVATAR']['VALUE'] ?? null;
                 if (!empty($avatarFileId)) {
                     $path = CFile::GetPath((int)$avatarFileId);

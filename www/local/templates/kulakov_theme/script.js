@@ -1,6 +1,3 @@
-/* =========================================================
-   Canvas — анимированный фон
-========================================================= */
 (function () {
   var canvas = document.getElementById('bgCanvas');
   if (!canvas) return;
@@ -43,12 +40,8 @@
   draw();
 }());
 
-/* =========================================================
-   jQuery — мобильное меню
-========================================================= */
 $(document).ready(function () {
 
-  // Бургер-меню
   $('#burgerBtn').click(function () {
     $('#sidebar').toggleClass('sidebar-open');
     $('#overlay').toggle();
@@ -59,7 +52,6 @@ $(document).ready(function () {
     $(this).hide();
   });
 
-  // Подсветка активного пункта меню по текущему URL
   var path = window.location.pathname;
   $('#navList .nav-link').each(function () {
     var href = $(this).attr('href');

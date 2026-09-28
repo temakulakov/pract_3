@@ -1,7 +1,7 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
-    </div><!-- /page -->
-  </main><!-- /main-content -->
-</div><!-- /layout -->
+    </div>
+  </main>
+</div>
 
 <footer class="site-footer">
   <p>© <?= date('Y') ?> Артем Кулаков &nbsp;·&nbsp; Пи2у/23Б</p>

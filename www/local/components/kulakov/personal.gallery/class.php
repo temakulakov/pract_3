@@ -25,7 +25,6 @@ class KulakovPersonalGallery extends CBitrixComponent
                 $fields = $item->GetFields();
                 $props  = $item->GetProperties();
 
-                // Получаем путь к картинке
                 $imgPath = '';
                 if (!empty($fields['PREVIEW_PICTURE'])) {
                     $imgPath = CFile::GetPath($fields['PREVIEW_PICTURE']);

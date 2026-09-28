@@ -1,8 +1,6 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-// Заголовок устанавливается автоматически из пункта меню (.left.menu.php)
 
-// Список проектов — инфоблок 5
 $APPLICATION->IncludeComponent(
 	"kulakov:personal.projects", 
 	".default", 
@@ -13,7 +11,6 @@ $APPLICATION->IncludeComponent(
 	false
 );
 
-// Галерея — инфоблок 6
 $APPLICATION->IncludeComponent(
     "kulakov:personal.gallery",
     ".default",
