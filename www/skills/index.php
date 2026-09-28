@@ -8,7 +8,7 @@ $APPLICATION->IncludeComponent(
 	[
 		"TITLE" => "Навыки",
 		"COMPONENT_TEMPLATE" => ".default",
-		"IBLOCK_ID" => "16"
+		"IBLOCK_ID" => "4"
 	],
 	false
 );

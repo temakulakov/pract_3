@@ -9,7 +9,7 @@ $APPLICATION->IncludeComponent(
 	[
 		"COMPONENT_TEMPLATE" => ".default",
 		"TITLE" => "Социальные сети",
-		"IBLOCK_ID" => "19"
+		"IBLOCK_ID" => "7"
 	],
 	false
 );

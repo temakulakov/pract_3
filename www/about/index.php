@@ -7,8 +7,8 @@ $APPLICATION->IncludeComponent(
 	".default", 
 	[
 		"COMPONENT_TEMPLATE" => ".default",
-		"IBLOCK_ID" => "20",
-		"ELEMENT_ID" => "118"
+		"IBLOCK_ID" => "8",
+		"ELEMENT_ID" => "18"
 	],
 	false
 );
