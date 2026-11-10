@@ -4,7 +4,7 @@ $headerTitle    = COption::GetOptionString('kulakov.main', 'HEADER_TITLE',    '�
 $headerSubtitle = COption::GetOptionString('kulakov.main', 'HEADER_SUBTITLE', 'Пи2у/23Б');
 $siteName       = COption::GetOptionString('kulakov.main', 'SITE_NAME',      'Артем Кулаков');
 
-$menuFile = $_SERVER['DOCUMENT_ROOT'] . '/.left.menu.php';
+$menuFile = $_SERVER['DOCUMENT_ROOT'] . SITE_DIR . '.left.menu.php';
 if (file_exists($menuFile)) {
     $aMenuLinks = [];
     include $menuFile;
@@ -12,12 +12,11 @@ if (file_exists($menuFile)) {
     $curPage = $APPLICATION->GetCurPage();
     foreach ($aMenuLinks as $link) {
         $url = $link[1];
-        $isMatch = ($url === '/')
-            ? ($curPage === '/' || $curPage === '/index.php')
+        $isMatch = ($url === SITE_DIR)
+            ? ($curPage === SITE_DIR || $curPage === SITE_DIR . 'index.php')
             : (strpos($curPage, $url) === 0);
         if ($isMatch) {
             $APPLICATION->SetTitle($link[0]);
-            $APPLICATION->SetPageProperty('title', $link[0] . ' — ' . $siteName);
             break;
         }
     }
@@ -36,7 +35,7 @@ $avatarInitials = mb_strtoupper($avatarInitials ?: 'АК');
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><?php $APPLICATION->ShowTitle(false); ?> — <?= htmlspecialcharsbx($siteName) ?></title>
+  <title><?php $APPLICATION->ShowTitle(); ?> — <?= htmlspecialcharsbx($siteName) ?></title>
   <link rel="icon" href="/local/templates/kulakov_theme/images/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/local/templates/kulakov_theme/images/favicon-32.png" />
   <link rel="apple-touch-icon" href="/local/templates/kulakov_theme/images/apple-touch-icon.png" />
@@ -45,7 +44,7 @@ $avatarInitials = mb_strtoupper($avatarInitials ?: 'АК');
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
   <?= $APPLICATION->ShowHead() ?>
 </head>
-<body>
+<body data-site-dir="<?= SITE_DIR ?>">
 
 <?= $APPLICATION->ShowPanel() ?>
 
@@ -88,7 +87,7 @@ $avatarInitials = mb_strtoupper($avatarInitials ?: 'АК');
     <div class="sidebar-divider"></div>
 
     <div class="sidebar-bottom">
-      <a href="/about/" class="sidebar-ext-link">О сайте &#8599;</a>
+      <a href="<?= SITE_DIR ?>about/" class="sidebar-ext-link">О сайте &#8599;</a>
     </div>
   </aside>
 

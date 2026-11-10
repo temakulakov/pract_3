@@ -53,11 +53,12 @@ $(document).ready(function () {
   });
 
   var path = window.location.pathname;
+  var root = $('body').data('site-dir') || '/';
   $('#navList .nav-link').each(function () {
     var href = $(this).attr('href');
-    if (href === '/' && path === '/') {
+    if (href === root && (path === root || path === root + 'index.php')) {
       $(this).addClass('active');
-    } else if (href !== '/' && path.indexOf(href) === 0) {
+    } else if (href !== root && path.indexOf(href) === 0) {
       $(this).addClass('active');
     }
   });

@@ -6,7 +6,7 @@ $APPLICATION->IncludeComponent(
 	".default", 
 	[
 		"COMPONENT_TEMPLATE" => ".default",
-		"IBLOCK_ID" => "5"
+		"IBLOCK_ID" => "6"
 	],
 	false
 );
@@ -16,7 +16,7 @@ $APPLICATION->IncludeComponent(
     ".default",
     [
         "COMPONENT_TEMPLATE" => ".default",
-        "IBLOCK_ID" => "6",
+        "IBLOCK_ID" => "7",
         "TITLE"     => "Галерея проектов",
         "COLUMNS"   => "3",
     ],

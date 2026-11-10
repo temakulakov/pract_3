@@ -1,13 +1,14 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetTitle("О сайте");
 
 $APPLICATION->IncludeComponent(
-	"kulakov:personal.skills", 
+	"kulakov:site.about", 
 	".default", 
 	[
-		"TITLE" => "Навыки",
 		"COMPONENT_TEMPLATE" => ".default",
-		"IBLOCK_ID" => "4"
+		"IBLOCK_ID" => "9",
+		"ELEMENT_ID" => "328"
 	],
 	false
 );

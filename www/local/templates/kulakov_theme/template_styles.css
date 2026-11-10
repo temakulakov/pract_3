@@ -909,3 +909,95 @@ textarea { resize: vertical; }
   box-shadow: 0 0 0 3px rgba(0,0,0,.06);
 }
 .contact-form textarea { resize: vertical; min-height: 120px; }
+.main-content {
+  background-image: url("images/pattern.png");
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-attachment: fixed;
+}
+
+.page-heading {
+  background-image: url("images/corner.png");
+  background-repeat: no-repeat;
+  background-position: right top;
+  padding-right: 120px;
+}
+
+.page-heading h1 {
+  display: inline-block;
+  background-color: #fbf3db;
+  padding: 0 8px;
+  border-radius: 4px;
+}
+
+hr.notion-hr {
+  border: none;
+  height: 0;
+  border-top: 1px dashed #d3d1cb;
+  margin: 28px 0;
+}
+
+.about-text a:link,
+.page a:link {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-text a:visited,
+.page a:visited {
+  color: #6940a5;
+}
+
+.notion-list li { line-height: 1.9; }
+
+
+.news-section {
+  margin: 28px 0 12px;
+}
+
+.news-card {
+  display: flex;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.news-thumb img {
+  width: 160px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.news-body { flex: 1; }
+
+.page a.news-title {
+  font-weight: 600;
+  font-size: 16px;
+  border-bottom: none;
+}
+
+.news-prop {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.news-prop span { color: var(--text-3); }
+
+.news-text { margin: 16px 0; }
+
+.news-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.news-photos img {
+  width: 260px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.news-back { margin-top: 24px; }
