@@ -58,7 +58,7 @@ function ib($type, $code, $name, $props)
         $fields = ['IBLOCK_ID' => $id, 'CODE' => $pc, 'NAME' => $p[0], 'PROPERTY_TYPE' => $p[1],
             'MULTIPLE' => !empty($p[2]) ? 'Y' : 'N', 'ACTIVE' => 'Y', 'SORT' => $sort += 10];
         if ($p[1] === 'F') $fields['FILE_TYPE'] = 'jpg, gif, bmp, png, jpeg, webp, svg';
-        if (!empty($p[3])) $fields += $p[3];
+        if (!empty($p[3])) $fields = $p[3] + $fields;
         (new CIBlockProperty)->Add($fields) or die("property $pc\n");
     }
     return (int)$id;
@@ -142,9 +142,17 @@ $ids['articles'] = ib('test', 'test_article', 'Статьи', [
     'KEY_WORDS' => ['Ключевые слова', 'S'],
 ]);
 
-$ids['ivanov'] = el($ids['authors'], ['NAME' => 'Иванов Иван Иванович', 'SORT' => 100, 'DETAIL_TEXT_TYPE' => 'html',
-    'DETAIL_TEXT' => '<p>Иван Иванович Иванов родился в Твери. Окончил факультет прикладной информатики, десять лет занимается разработкой сайтов на 1С-Битрикс.</p><p>Автор статей об инфоблоках, компонентах и шаблонах сайта для отраслевых журналов.</p>'],
-    ['BIRTHDATE' => '12.04.1985 00:00:00', 'BROWSER_TITLE' => 'Иванов Иван Иванович — автор статей о 1С-Битрикс']);
+$authorFields = ['NAME' => 'Кулаков Артем Андреевич', 'SORT' => 100, 'DETAIL_TEXT_TYPE' => 'html',
+    'DETAIL_TEXT' => '<p>Студент РЭУ им. Г.В. Плеханова, направление «Прикладная информатика», группа Пи2у/23Б.</p><p>Изучает веб-разработку и 1С-Битрикс: Управление сайтом — шаблоны, компоненты и инфоблоки.</p>'];
+$authorProps = ['BIRTHDATE' => '02.07.2001 00:00:00', 'BROWSER_TITLE' => 'Кулаков Артем Андреевич — автор статей о 1С-Битрикс'];
+$ex = CIBlockElement::GetList([], ['IBLOCK_ID' => $ids['authors'], 'NAME' => ['Кулаков Артем Андреевич', 'Иванов Иван Иванович']], false, false, ['ID'])->Fetch();
+if ($ex) {
+    $ids['author'] = (int)$ex['ID'];
+    (new CIBlockElement)->Update($ids['author'], $authorFields);
+    CIBlockElement::SetPropertyValuesEx($ids['author'], $ids['authors'], $authorProps);
+} else {
+    $ids['author'] = el($ids['authors'], $authorFields, $authorProps);
+}
 
 $sect = CIBlockSection::GetList([], ['IBLOCK_ID' => $ids['articles'], 'CODE' => 'bitrix-site-manager'])->Fetch();
 if ($sect) {
@@ -160,7 +168,7 @@ el($ids['articles'], ['NAME' => 'Инфоблоки: где хранится к�
     'DETAIL_TEXT_TYPE' => 'html',
     'DETAIL_TEXT' => '<p>Информационные блоки — основной способ хранения однотипных данных в 1С-Битрикс: новостей, статей, товаров. Инфоблоки объединяются в типы, у каждого инфоблока есть свои свойства.</p><p>Свойства бывают строковыми, числовыми, файловыми, привязками к элементам и разделам. Свойство может быть множественным — например, несколько картинок у одной статьи.</p>',
     'PREVIEW_PICTURE' => f('article1.jpg')],
-    ['YEAR' => '2025', 'AUTHORS' => [$ids['ivanov']], 'MORE_PHOTO' => [f('article1.jpg'), f('article2.jpg')],
+    ['YEAR' => '2025', 'AUTHORS' => [$ids['author']], 'MORE_PHOTO' => [f('article1.jpg'), f('article2.jpg')],
      'BROWSER_TITLE' => 'Инфоблоки в 1С-Битрикс', 'KEY_WORDS' => 'инфоблоки, свойства, 1С-Битрикс']);
 
 el($ids['articles'], ['NAME' => 'Компоненты и шаблоны: как выводится информация', 'SORT' => 200, 'IBLOCK_SECTION_ID' => $ids['section'],
@@ -168,8 +176,37 @@ el($ids['articles'], ['NAME' => 'Компоненты и шаблоны: как 
     'DETAIL_TEXT_TYPE' => 'html',
     'DETAIL_TEXT' => '<p>Компонент отвечает за логику: получает данные из инфоблока и передает их в шаблон. Шаблон компонента отвечает только за внешний вид.</p><p>Шаблон сайта задает общий дизайн страниц: шапку, меню, подвал. Для одного сайта можно назначить несколько шаблонов по условиям.</p>',
     'PREVIEW_PICTURE' => f('article3.jpg')],
-    ['YEAR' => '2026', 'AUTHORS' => [$ids['ivanov']], 'MORE_PHOTO' => [f('article3.jpg'), f('article4.jpg')],
+    ['YEAR' => '2026', 'AUTHORS' => [$ids['author']], 'MORE_PHOTO' => [f('article3.jpg'), f('article4.jpg')],
      'BROWSER_TITLE' => 'Компоненты и шаблоны 1С-Битрикс', 'KEY_WORDS' => 'компоненты, шаблоны, 1С-Битрикс']);
+
+// ---------- сертификаты ----------
+$ids['certs'] = ib('personal', 'kulakov_certificates', 'Сертификаты', [
+    'FILE' => ['Файл сертификата (PDF)', 'F', 0, ['FILE_TYPE' => 'pdf']],
+    'NUMBER' => ['Номер', 'S'],
+    'DATE' => ['Дата выдачи', 'S', 0, ['USER_TYPE' => 'Date']],
+]);
+$prop = CIBlockProperty::GetList([], ['IBLOCK_ID' => $ids['certs'], 'CODE' => 'FILE'])->Fetch();
+if ($prop && $prop['FILE_TYPE'] !== 'pdf') (new CIBlockProperty)->Update($prop['ID'], ['FILE_TYPE' => 'pdf']);
+$certs = [
+    ['razrabotchik-bitrix-framework', 'Разработчик Bitrix Framework', '13.05.2026', 'LRN-651514-43-1584-9323042'],
+    ['kontent-menedzher', 'Контент-менеджер', '25.10.2026', 'LRN-671620-34-202-9323042'],
+    ['administrator-bazovyy', 'Администратор. Базовый', '25.10.2026', 'LRN-671616-35-743-9323042'],
+    ['administrator-moduli', 'Администратор. Модули', '25.10.2026', 'LRN-671626-41-396-9323042'],
+    ['administrator-biznes', 'Администратор. Бизнес', '25.10.2026', 'LRN-671628-42-441-9323042'],
+    ['ustanovka-i-nastroyka', 'Установка и настройка', '25.10.2026', 'LRN-671624-135-385-9323042'],
+    ['mnogosaytovost', 'Многосайтовость', '13.05.2026', 'LRN-651524-103-216-9323042'],
+    ['tehnologiya-kompozitnyy-sayt', 'Технология Композитный сайт', '25.10.2026', 'LRN-671630-39-136-9323042'],
+    ['integratsiya-s-1s', 'Интеграция с 1С', '25.10.2026', 'LRN-671634-131-112-9323042'],
+    ['biznes-protsessy', 'Бизнес-процессы', '25.10.2026', 'LRN-671636-57-176-9323042'],
+    ['prodvizhenie-sayta-i-marketing', 'Продвижение сайта и Маркетинг', '25.10.2026', 'LRN-671632-139-179-9323042'],
+    ['vue-js-i-bitrix-framework', 'Vue.js и Bitrix Framework', '25.10.2026', 'LRN-671618-176-181-9323042'],
+    ['kurs-dlya-hosterov', 'Курс для хостеров', '13.05.2026', 'LRN-651522-32-625-9323042'],
+    ['administrator-servisa-bitriks24-korobochnaya-versiya', 'Администратор сервиса Битрикс24 (коробочная версия)', '26.10.2026', 'LRN-671718-48-1434-9323042'],
+];
+foreach ($certs as $i => [$code, $name, $date, $num]) {
+    el($ids['certs'], ['NAME' => $name, 'CODE' => $code, 'SORT' => 100 * ($i + 1), 'PREVIEW_PICTURE' => f("certs/$code.jpg")],
+        ['FILE' => f("certs/$code.pdf"), 'NUMBER' => $num, 'DATE' => $date]);
+}
 
 $ib = new CIBlock;
 $ib->Update($ids['authors'], ['LIST_PAGE_URL' => '#SITE_DIR#/authors/', 'SECTION_PAGE_URL' => '',

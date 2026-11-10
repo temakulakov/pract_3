@@ -5,7 +5,7 @@ function KulakovAddAdminMenu(&$aGlobalMenu, &$aModuleMenu)
     $aModuleMenu[] = [
         'parent_menu' => 'global_menu_settings',
         'sort'        => 50,
-        'url'         => 'kulakov_settings.php?lang=' . LANGUAGE_ID,
+        'url'         => '/local/admin/kulakov_settings.php?lang=' . LANGUAGE_ID,
         'text'        => 'Настройки сайта (Kulakov)',
         'title'       => 'Заголовок и подзаголовок сайдбара',
         'icon'        => 'default_menu_icon',
